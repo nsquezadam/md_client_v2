@@ -31,7 +31,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'default_key')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = ['127.0.0.1','md-client-v2.onrender.com',"http://localhost:3000"]
+ALLOWED_HOSTS = ['md-client-v2.onrender.com',"http://localhost:3000",'127.0.0.1']
 
 
 # Application definition
@@ -178,10 +178,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_DIRS = [BASE_DIR / 'static_build/']
+STATICFILES_DIRS = [BASE_DIR / 'static_build/build']
 
 
-TEMPLATES[0]['DIRS'] = [BASE_DIR / 'static_build']
+TEMPLATES[0]['DIRS'] = [BASE_DIR / 'static_build/build']
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
