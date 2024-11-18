@@ -1,0 +1,79 @@
+@import '../../styles/variables.css';
+/* Estructura del header */
+.header-container {
+    background-color: var(--color-primary); /* Azul intenso */
+    color:var(--color-background);
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    /* position: fixed;  */
+    
+} 
+
+/* .header-content {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+} */
+
+/* Zona izquierda (Logo y texto) */
+.header-left {
+    display: flex;
+    align-items: center;
+    margin-left: 1.6rem;
+}
+
+.header-logo {
+    width: 80px;
+    height: auto;
+    margin-right: 15px;
+}
+
+.header-text h2 {
+    margin: 0;
+    font-size: 18px;
+    color:var(--color-background) ;
+}
+
+.header-text p {
+    margin: 2px 0;
+    font-size: 14px;
+    color:var(--color-background) ;
+}
+
+/* Zona derecha (Hora y botón de salir) */
+.header-right {
+    text-align: right;
+    margin-right: 1.8rem;
+}
+.header-right p{
+    color: var(--color-background);
+}
+.current-time {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--color-background);
+}
+
+.logout-button {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background-color: var(--color-background);
+    color: var(--color-primary);
+    border: 1px solid var(--color-background);
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.logout-button:hover {
+    background-color: var(--color-primary);
+    color: var(--color-background);
+    border-color: var(--color-background);
+}

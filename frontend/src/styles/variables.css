@@ -1,0 +1,10 @@
+:root {
+    --color-primary: #186FCC; /*  principal */
+    --color-secondary: #425162a3; /* secundario */
+    --color-background: #FBFAF2; /* Fondo */
+    --color-text: #333333; /* Texto principal */
+    --color-text-light: #FBFAF2; /* Texto secundario */
+    --color-header: #186FCC; /* Fondo del header */
+    --color-footer: #186FCC; /* Fondo del footer */
+    --color-error:rgb(79, 7, 7); /* Mensajes de error */
+}

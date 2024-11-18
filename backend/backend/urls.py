@@ -17,6 +17,19 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from django.contrib import admin
+from django.urls import path, include,re_path
+from django.views.generic import TemplateView
+from rest_framework.routers import DefaultRouter
+from authentication import views
+from django.views.generic.base import RedirectView
+
+
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    #path('', views.admin_dashboard, name='home'),  # Redirección a la página de inicio personalizada
+    path('admin/', admin.site.urls),  # Panel de administración por defecto de Django
+    path('api/auth/', include('authentication.urls')),  # Incluye las URLs de autenticación
+    path('custom-admin/', views.admin_dashboard, name='admin_dashboard'),  # Panel personalizado
+    path('', RedirectView.as_view(url='/admin/', permanent=True)), 
+    #re_path(r'^.*$', TemplateView.as_view(template_name='index.html')),
 ]

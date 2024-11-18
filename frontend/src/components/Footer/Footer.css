@@ -1,0 +1,6 @@
+@import '../../styles/variables.css';
+.Footer {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    color: var(--color-background);
+}

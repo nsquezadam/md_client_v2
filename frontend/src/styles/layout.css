@@ -1,0 +1,30 @@
+@import './variables.css';
+
+
+
+
+/*
+.header a {
+    color: white;
+    margin: 0 15px;
+    font-weight: bold;
+}
+
+.header a:hover {
+    color: var(--color-secondary);
+} */
+
+.footer {
+    background-color: var(--color-footer);
+    
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.footer p {
+    margin: 0;
+    color: var(--color-background);
+}
