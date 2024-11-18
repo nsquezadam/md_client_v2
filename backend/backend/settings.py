@@ -178,7 +178,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_DIRS = [BASE_DIR / 'static_build']
+STATICFILES_DIRS = [BASE_DIR / 'static_build/build']
+
 
 TEMPLATES[0]['DIRS'] = [BASE_DIR / 'static_build']
 
