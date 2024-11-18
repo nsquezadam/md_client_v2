@@ -11,9 +11,6 @@ urlpatterns = [
     # API de autenticación
     path('api/auth/', include('authentication.urls')),
 
-    # # Panel de administración personalizado
-    # path('custom-admin/', views.admin_dashboard, name='admin_dashboard'),
-
     # Rutas no manejadas -> React frontend (index.html)
     re_path(r'^.*$', TemplateView.as_view(template_name='index.html')),
 ]

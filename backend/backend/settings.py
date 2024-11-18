@@ -60,6 +60,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     
 ]
+MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware') 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
 AUTH_USER_MODEL = 'authentication.Usuario'  # 'authentication' es la aplicación donde definiste tu modelo Usuario
