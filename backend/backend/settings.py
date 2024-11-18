@@ -31,7 +31,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'default_key')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = ['127.0.0.1','https://md-client-v2.onrender.com',"http://localhost:3000"]
+ALLOWED_HOSTS = ['127.0.0.1','md-client-v2.onrender.com',"http://localhost:3000"]
 
 
 # Application definition
