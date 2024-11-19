@@ -12,5 +12,5 @@ urlpatterns = [
     path('api/auth/', include('authentication.urls')),
 
     # Rutas no manejadas -> React frontend (index.html)
-    path('', TemplateView.as_view(template_name='index.html')),
+    re_path(r'^.*$', TemplateView.as_view(template_name='index.html')),
 ]

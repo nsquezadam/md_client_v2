@@ -34,6 +34,7 @@ DEBUG = os.getenv('DEBUG', 'True') == 'True'
 ALLOWED_HOSTS = ['md-client-v2.onrender.com',"http://localhost:3000",'127.0.0.1']
 
 
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -66,7 +67,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 AUTH_USER_MODEL = 'authentication.Usuario'  # 'authentication' es la aplicación donde definiste tu modelo Usuario
 ROOT_URLCONF = 'backend.urls'
 CORS_ALLOW_ALL_ORIGINS = False
-CORS_ALLOWED_ORIGINS = ['https://md-client-v2.onrender.com',"http://localhost:3000" ]
+CORS_ALLOWED_ORIGINS = ['md-client-v2.onrender.com',"http://localhost:3000" ]
 
 
 TEMPLATES = [
@@ -179,10 +180,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static_build')]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'backend/static_build')]
 
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')                             
 WHITENOISE_USE_FINDERS = True  # Si usas WhiteNoise
 
 
