@@ -1,0 +1,19 @@
+# Ignorar la carpeta de archivos generados para el frontend
+backend/static_build/
+
+# Ignorar entornos virtuales
+env/
+venv/
+
+# Ignorar archivos de configuración sensibles
+.env
+
+# Ignorar archivos de compilación de Node.js
+frontend/node_modules/
+frontend/build/
+
+# Ignorar archivos de sistema
+__pycache__/
+*.pyc
+*.pyo
+.DS_Store
