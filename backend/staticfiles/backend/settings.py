@@ -31,7 +31,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'default_key')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = ['https://md-client-v2.onrender.com',"http://localhost:3000",'127.0.0.1']
+ALLOWED_HOSTS = ['md-client-v2.onrender.com',"http://localhost:3000",'127.0.0.1']
 
 
 
@@ -68,7 +68,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 AUTH_USER_MODEL = 'authentication.Usuario'  # 'authentication' es la aplicación donde definiste tu modelo Usuario
 ROOT_URLCONF = 'backend.urls'
 CORS_ALLOW_ALL_ORIGINS = False
-CORS_ALLOWED_ORIGINS = ['https://md-client-v2.onrender.com',"http://localhost:3000" ]
+CORS_ALLOWED_ORIGINS = ['md-client-v2.onrender.com',"http://localhost:3000" ]
 
 
 TEMPLATES = [
