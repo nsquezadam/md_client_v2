@@ -162,3 +162,6 @@ curl -X POST http://127.0.0.1:8000/api/auth/direccion/ \
     "ciudad": "Santiago",
     "region": "metyropolitana"
 }'
+
+mv frontend/build backend/static_build
+python manage.py collectstatic --noinput
