@@ -69,7 +69,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 AUTH_USER_MODEL = 'authentication.Usuario'  # 'authentication' es la aplicación donde definiste tu modelo Usuario
 ROOT_URLCONF = 'backend.urls'
 CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOWED_ORIGINS = ['md-client-v2.onrender.com',"http://localhost:3000" ]
+CORS_ALLOWED_ORIGINS = ['md-client-v2.onrender.com',"http://localhost:3000","https://mdclient.netlify.app" ]
 
 
 TEMPLATES = [
