@@ -182,10 +182,18 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_DIRS = [BASE_DIR / 'static_build']
+# STATICFILES_DIRS = [BASE_DIR / 'static_build']
 
 # Carpeta donde se recopilarán los archivos estáticos al usar collectstatic
 STATIC_ROOT = BASE_DIR / "staticfiles"
+
+# Verifica si el directorio existe antes de incluirlo
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'backend/static_build') if os.path.exists(os.path.join(BASE_DIR, 'backend/static_build')) else None,
+]
+STATICFILES_DIRS = [dir for dir in STATICFILES_DIRS if dir]  # Filtra los valores 'None'
+
+
                     
 WHITENOISE_USE_FINDERS = True  # Si usas WhiteNoise
 
