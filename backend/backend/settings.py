@@ -62,7 +62,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     
 ]
-
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 WSGI_APPLICATION = 'backend.wsgi.application'
 
 AUTH_USER_MODEL = 'authentication.Usuario'  # 'authentication' es la aplicación donde definiste tu modelo Usuario
