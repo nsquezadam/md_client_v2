@@ -19,7 +19,7 @@ env = environ.Env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-LOGIN_REDIRECT_URL = '/custom-admin/' 
+
 LOGIN_URL = '/api/auth/login/'
 
 # Quick-start development settings - unsuitable for production
@@ -181,11 +181,15 @@ USE_TZ = True
 
 
 STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+# Directorios donde Django buscará archivos estáticos adicionales
+STATICFILES_DIRS = [
+    BASE_DIR / "backend/static_build",  # Ajusta la ruta si es necesario
+]
 
-STATICFILES_DIRS = [BASE_DIR , 'static_build']
-
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')                             
+# Carpeta donde se recopilarán los archivos estáticos al usar collectstatic
+STATIC_ROOT = BASE_DIR / "staticfiles"
+                    
 WHITENOISE_USE_FINDERS = True  # Si usas WhiteNoise
 
 
