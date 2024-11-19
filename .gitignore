@@ -17,3 +17,6 @@ __pycache__/
 *.pyc                                                               
 *.pyo
 .DS_Store
+# Ignorar la carpeta de archivos estáticos generada
+/staticfiles
+/staticfiles/
