@@ -182,10 +182,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-# Directorios donde Django buscará archivos estáticos adicionales
-STATICFILES_DIRS = [
-    BASE_DIR / "backend/static_build",  # Ajusta la ruta si es necesario
-]
+STATICFILES_DIRS = [BASE_DIR / 'static_build']
 
 # Carpeta donde se recopilarán los archivos estáticos al usar collectstatic
 STATIC_ROOT = BASE_DIR / "staticfiles"
