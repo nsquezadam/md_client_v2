@@ -60,7 +60,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     
 ]
-MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware') 
+
 WSGI_APPLICATION = 'backend.wsgi.application'
 
 AUTH_USER_MODEL = 'authentication.Usuario'  # 'authentication' es la aplicación donde definiste tu modelo Usuario
@@ -179,10 +179,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_DIRS = [BASE_DIR / 'static_build/build']
+STATICFILES_DIRS = [BASE_DIR / 'static_build/']
 
 
-TEMPLATES[0]['DIRS'] = [BASE_DIR / 'static_build/build']
+TEMPLATES[0]['DIRS'] = [BASE_DIR / 'static_build/']
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
