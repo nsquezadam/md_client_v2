@@ -31,7 +31,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'default_key')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = ['md-client-v2.onrender.com',"http://localhost:3000",'127.0.0.1']
+ALLOWED_HOSTS = ['md-client-v2.onrender.com',"http://localhost:3000",'127.0.0.1','localhost']
 
 
 
@@ -63,14 +63,23 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     
 ]
+
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:3000",
+]
+
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 WSGI_APPLICATION = 'backend.wsgi.application'
 
 AUTH_USER_MODEL = 'authentication.Usuario'  # 'authentication' es la aplicación donde definiste tu modelo Usuario
 ROOT_URLCONF = 'backend.urls'
 CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOWED_ORIGINS = ['md-client-v2.onrender.com',"http://localhost:3000","https://mdclient.netlify.app" ]
-
+CORS_ALLOWED_ORIGINS = ["https://md-client-v2.onrender.com","http://localhost:3000","https://mdclient.netlify.app","http://127.0.0.1:8000" ]
+# Configurar cookies para CSRF
+CSRF_COOKIE_SECURE = False  # Cambiar a True en producción con HTTPS
+CSRF_COOKIE_HTTPONLY = False
+CSRF_USE_SESSIONS = False
 
 TEMPLATES = [
     {

@@ -1,41 +1,42 @@
-import React from "react";
-import CrudTable from "./Crudtable";
+import React, { useState } from "react";
+import UsuariosTable from "./UsuariosTable";
+import PersonalTable from "./PersonalTable";
+import DireccionesTable from "./DireccionesTable";
 import "./AdminDashboard.css";
 
 const AdminDashboard = () => {
+    const [activeSection, setActiveSection] = useState("usuarios");
+
+    const renderActiveSection = () => {
+        switch (activeSection) {
+            case "usuarios":
+                return <UsuariosTable />;
+            case "personal":
+                return <PersonalTable />;
+            case "direcciones":
+                return <DireccionesTable />;
+            default:
+                return <UsuariosTable />;
+        }
+    };
+
     return (
         <div className="admin-dashboard">
-            <header className="dashboard-header">
-                <h1>Panel Administrador</h1>
-                <p>Gestión de Usuarios, Personal y Direcciones</p>
+            <header>
+                <h1>Panel de Administración</h1>
             </header>
-
-            <section className="dashboard-section">
-                <CrudTable
-                    endpoint="usuario"
-                    columns={["nom_usuario", "estado","hk_contrasena", "id_personal", "estado"]}
-                    title="Usuarios"
-                    idField="id_usuario"
-                />
-            </section>
-
-            <section className="dashboard-section">
-                <CrudTable
-                    endpoint="personal"
-                    columns={["rut_completo","primer_nombre","segundo_nombre", "apellido_paterno","apellido_materno","fec_nacimiento", "telefono","correo_electronico","fec_contratacion","id_direccion"]}
-                    title="Personal"
-                    idField="id_personal"
-                />
-            </section>
-
-            <section className="dashboard-section">
-                <CrudTable
-                    endpoint="direccion"
-                    columns={["nom_calle", "num_calle", "departamento", "comuna", "ciudad", "region"]}
-                    title="Direcciones"
-                    idField="id_direccion"
-                />
-            </section>
+            <nav className="dashboard-nav">
+                <button onClick={() => setActiveSection("usuarios")}>
+                    Usuarios
+                </button>
+                <button onClick={() => setActiveSection("personal")}>
+                    Personal
+                </button>
+                <button onClick={() => setActiveSection("direcciones")}>
+                    Direcciones
+                </button>
+            </nav>
+            <main>{renderActiveSection()}</main>
         </div>
     );
 };

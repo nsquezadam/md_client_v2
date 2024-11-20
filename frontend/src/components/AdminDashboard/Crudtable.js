@@ -1,114 +1,112 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { fetchData, createData, updateData, deleteData } from "../../services/apiService";
+import React, { useState, useEffect } from "react";
+import { fetchData, updateData, deleteData } from "../../services/apiService";
+import "./Crudtable.css";
 
-
-const CrudTable = ({ endpoint, columns, title, idField }) => {
+const Crudtable = ({ endpoint, columns, columnLabels, idField, title }) => {
     const [data, setData] = useState([]);
-    const [form, setForm] = useState({});
-    const [editingId, setEditingId] = useState(null);
-    const [error, setError] = useState(null);
-
-    const loadData = useCallback(async () => {
-        try {
-            const fetchedData = await fetchData(endpoint);
-            if (Array.isArray(fetchedData)) {
-                setData(fetchedData);
-            } else {
-                throw new Error("Datos no válidos recibidos.");
-            }
-        } catch (err) {
-            console.error("Error al cargar los datos:", err.message);
-            setError("Error al cargar los datos.");
-        }
-    }, [endpoint]);
+    const [error, setError] = useState("");
+    const [editRow, setEditRow] = useState(null); // Estado para controlar la edición
+    const [formData, setFormData] = useState({}); // Datos del formulario
 
     useEffect(() => {
+        const loadData = async () => {
+            try {
+                const result = await fetchData(endpoint);
+                setData(result);
+            } catch (err) {
+                setError("Error al cargar los datos.");
+            }
+        };
         loadData();
-    }, [loadData]);
+    }, [endpoint]);
 
-    const handleInputChange = (e) => {
-        setForm({ ...form, [e.target.name]: e.target.value });
+    const handleEditClick = (row) => {
+        setEditRow(row);
+        setFormData(row);
     };
 
-    const handleSubmit = async (e) => {
+    const handleFormChange = (e) => {
         e.preventDefault();
-        console.log("Datos enviados:", form, "ID:", editingId); // Agrega esto
-        try {
-          if (editingId) {
-            await updateData(endpoint, editingId, form);
-          } else {
-            await createData(endpoint,form); // Llama a la función del servicio
-          }
-          setEditingId(null);
-          setForm({});
-          loadData();
-        } catch (err) {
-          console.error("Error al guardar los datos:", err.message);
-          setError("Error al guardar los datos.");
-        }
-      };
-      
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+    };
 
-    const handleEdit = (item) => {
-        setEditingId(item[idField]);
-        setForm(item);
+    const handleSave = async (e) => {
+        try {
+            await updateData(endpoint, formData[idField], formData);
+            setData((prevData) =>
+                prevData.map((item) =>
+                    item[idField] === formData[idField] ? formData : item
+                )
+            );
+            setEditRow(null);
+        } catch (err) {
+            setError("Error al guardar los datos.");
+        }
     };
 
     const handleDelete = async (id) => {
         try {
             await deleteData(endpoint, id);
-            console.log("Registro eliminado correctamente.");
-            loadData(); // Recarga los datos después de eliminar
+            setData((prevData) => prevData.filter((item) => item[idField] !== id));
         } catch (err) {
-            console.error("Error al eliminar los datos:", err.message);
             setError("Error al eliminar los datos.");
         }
     };
-    
+
     return (
         <div className="crud-table">
-            <h2>{title}</h2>
-            {error && <p className="error-message">{error}</p>}
-            <form onSubmit={handleSubmit} className="crud-form">
-                {columns.map((col) => (
-                    <div key={col} className="form-group">
-                        <label>{col}</label>
-                        <input
-                            name={col}
-                            value={form[col] || ""}
-                            onChange={handleInputChange}
-                        />
-                    </div>
-                ))}
-                <button type="submit" className="btn-submit">
-                    {editingId ? "Actualizar" : "Crear"}
-                </button>
-            </form>
-            <table className="crud-table-content">
+            <h3>{title}</h3>
+            {error && <p className="error">{error}</p>}
+            <table>
                 <thead>
                     <tr>
                         {columns.map((col) => (
-                            <th key={col}>{col}</th>
+                            <th key={col}>{columnLabels[col]}</th>
                         ))}
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-            {data.map((item, index) => (
-                <tr key={item[idField] || index}> {/* Cambia aquí */}
-                    {columns.map((col) => (
-                <td key={`${item[idField]}-${col}`}>{item[col]}</td>
-                ))}
-                <td>
-                <button className="btn-edit" onClick={() => handleEdit(item)}>Editar</button>
-                <button className="btn-delete" onClick={() => handleDelete(item[idField])}>Eliminar</button>
-                </td>
-            </tr>
-            ))}
-            </tbody>
+                    {data.map((row) => (
+                        <tr key={row[idField]}>
+                            {columns.map((col) => (
+                                <td key={`${row[idField]}-${col}`}>{row[col]}</td>
+                            ))}
+                            <td>
+                                <button onClick={() => handleEditClick(row)}>Editar</button>
+                                <button onClick={() => handleDelete(row[idField])}>
+                                    Eliminar
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
             </table>
+
+            {/* Formulario emergente para edición */}
+            {editRow && (
+                <div className="modal">
+                    <div className="modal-content">
+                        <h3>Editar {title}</h3>
+                        {columns.map((col) => (
+                            <div key={col}>
+                                <label>{columnLabels[col]}</label>
+                                <input
+                                    type="text"
+                                    name={col}
+                                    value={formData[col] || ""}
+                                    onChange={handleFormChange}
+                                />
+                            </div>
+                        ))}
+                        <button onClick={handleSave}>Guardar</button>
+                        <button onClick={() => setEditRow(null)}>Cancelar</button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
 
-export default CrudTable;
+export default Crudtable;

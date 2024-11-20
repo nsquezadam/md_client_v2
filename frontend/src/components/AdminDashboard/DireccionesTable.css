@@ -1,0 +1,25 @@
+.direcciones-table {
+    padding: 10px;
+}
+
+.direcciones-table h2 {
+    margin-bottom: 20px;
+    color: #ffc107;
+}
+
+.direcciones-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.direcciones-table th,
+.direcciones-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.direcciones-table th {
+    background-color: #fff8e1;
+}

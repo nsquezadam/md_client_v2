@@ -1,12 +1,51 @@
 @import '../../styles/variables.css';
 
+.admin-dashboard {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+
+.admin-dashboard header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+
+.admin-dashboard nav{
+    margin-bottom: 30px;
+}
+
+.admin-dashboard nav button {
+    margin-right: 10px;
+    padding: 10px 20px;
+    font-size: 14px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.admin-dashboard nav button:hover {
+    background-color: #0056b3;
+}
+
+.admin-dashboard nav button:focus {
+    outline: none;
+    background-color: #003f7f;
+}
+
+
+
 .error-message {
     color: red;
     font-weight: bold;
     margin: 10px 0;
 }
 .admin-dashboard {
-    max-width: 1300px;
+    
     margin: 0 auto;
     padding: 20px;
 }
@@ -32,36 +71,28 @@
 
 /* Table Styles */
 .crud-table {
-    background-color:var(--color-background);
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 15px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 20px 0;
 }
 
 .crud-table-content {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 15px;
 }
 
-.crud-table-content th,
-.crud-table-content td {
+.crud-table-content th, .crud-table-content td {
     border: 1px solid #ddd;
-    padding: 10px;
     text-align: left;
+    padding: 8px;
 }
 
 .crud-table-content th {
-    background-color: #f4f4f9;
+    background-color: #f4f4f4;
     font-weight: bold;
 }
 
 .crud-table-content tr:nth-child(even) {
     background-color: #f9f9f9;
 }
-
 .crud-table-content tr:hover {
     background-color: #eaf4ff;
 }
@@ -107,26 +138,23 @@
 }
 
 .btn-edit {
-    padding: 5px 10px;
-    background-color: #efb60a;
-    margin-bottom: 5px;
-    color:var(--color-background);
+    background-color: var(--color-primary);
+    color: white;
     border: none;
-    border-radius: 4px;
+    padding: 5px 10px;
     cursor: pointer;
     margin-right: 5px;
 }
 
 .btn-edit:hover {
-    background-color: #e0a800;
+    background-color: var(--color-secondary);
 }
 
 .btn-delete {
-    padding: 5px 10px;
     background-color: #dc3545;
     color: white;
     border: none;
-    border-radius: 4px;
+    padding: 5px 10px;
     cursor: pointer;
 }
 

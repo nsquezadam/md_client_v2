@@ -11,8 +11,8 @@ from django.utils.timezone import now
 from django.views.decorators.http import require_http_methods
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-
-
+from rest_framework.permissions import IsAuthenticated
+from django.views.decorators.csrf import csrf_protect
 
 import logging
 logger = logging.getLogger(__name__)
@@ -179,6 +179,8 @@ def admin_dashboard(request):
 class PersonalViewSet(viewsets.ModelViewSet):
     queryset = Personal.objects.all()
     serializer_class = PersonalSerializer
+    http_method_names = ['get', 'post', 'put', 'delete']  
+    permission_classes = [IsAuthenticated] 
 
 class UsuarioViewSet(viewsets.ModelViewSet):
     queryset = Usuario.objects.all()
@@ -220,3 +222,10 @@ def obtener_datos_combinados(request):
         return Response({"error": "Error al obtener los datos."}, status=500)
 
 
+@csrf_protect
+def crear_direccion(request):
+    if request.method == 'POST':
+        print("CSRF Token:", request.META.get("CSRF_COOKIE"))
+        print("Headers:", request.headers)
+        # Lógica para procesar la solicitud
+    return JsonResponse({"message": "Método no permitido"}, status=405)
