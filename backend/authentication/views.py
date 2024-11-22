@@ -12,38 +12,78 @@ from django.views.decorators.http import require_http_methods
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie
+from django.middleware.csrf import get_token
 
 import logging
 logger = logging.getLogger(__name__)
 
 
+from django.middleware.csrf import get_token
+from django.http import JsonResponse
+
+def generate_csrf(request):
+    token = get_token(request)
+    response = JsonResponse({"csrftoken": token})
+    response.set_cookie(
+        "csrftoken",
+        token,
+        httponly=False,  # Para permitir acceso desde JavaScript
+        samesite="Lax",
+    )
+    return response
 @csrf_exempt
+@api_view(['POST'])
 def user_login(request):
     if request.method == "POST":
+        # Registrar cookies y headers relacionados con CSRF para depuración
+        print("CSRF Cookie:", request.COOKIES.get("csrftoken"))
+        print("CSRF Header:", request.headers.get("X-CSRFToken"))
+
         try:
+            # Parsear el cuerpo de la solicitud
             data = json.loads(request.body)
             username = data.get("username")
             password = data.get("password")
 
+            # Autenticar usuario
             user = authenticate(request, username=username, password=password)
+
             if user is not None:
+                # Iniciar sesión del usuario
                 login(request, user)
+
+                # Regenerar CSRF Token después del inicio de sesión
+                csrf_token = get_token(request)
+
                 return JsonResponse({
                     "success": True,
                     "message": "Login exitoso",
+                    "csrftoken": csrf_token,
                     "user": {
                         "nombre": user.nom_usuario,
                         "is_admin": user.is_superuser,
                         "is_staff": user.is_staff,
                     }
-                })
+                }, status=200)
             else:
-                return JsonResponse({"success": False, "message": "Credenciales inválidas"}, status=401)
-        except json.JSONDecodeError:
-            return JsonResponse({"success": False, "message": "Formato de datos inválido"}, status=400)
+                return JsonResponse({
+                    "success": False,
+                    "message": "Credenciales inválidas"
+                }, status=401)
 
-    return HttpResponseNotAllowed(["POST"], "Método no permitido")
+        except json.JSONDecodeError:
+            return JsonResponse({
+                "success": False,
+                "message": "Formato de datos inválido"
+            }, status=400)
+
+    return JsonResponse({
+        "success": False,
+        "message": "Método no permitido"
+    }, status=405)
+
+
 def is_admin(user):
     return user.is_superuser
 #
@@ -188,17 +228,12 @@ class UsuarioViewSet(viewsets.ModelViewSet):
 
 
 
+
 class DireccionViewSet(viewsets.ModelViewSet):
     queryset = Direccion.objects.all()
     serializer_class = DireccionSerializer
+    permission_classes = [IsAuthenticated]
 
-    def create(self, request, *args, **kwargs):
-        logger.debug(f"Datos recibidos para crear Dirección: {request.data}")
-        try:
-            return super().create(request, *args, **kwargs)
-        except Exception as e:
-            logger.error(f"Error al crear Dirección: {e}", exc_info=True)
-            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @api_view(['GET'])
@@ -222,10 +257,33 @@ def obtener_datos_combinados(request):
         return Response({"error": "Error al obtener los datos."}, status=500)
 
 
+
+
+
 @csrf_protect
 def crear_direccion(request):
     if request.method == 'POST':
-        print("CSRF Token:", request.META.get("CSRF_COOKIE"))
-        print("Headers:", request.headers)
-        # Lógica para procesar la solicitud
-    return JsonResponse({"message": "Método no permitido"}, status=405)
+        print("CSRF Cookie:", request.COOKIES.get('csrftoken'))  # Verifica la cookie
+        print("CSRF Header:", request.headers.get('X-CSRFToken'))  # Verifica el encabezado
+        print("CSRF Token Middleware:", get_token(request))  # Token generador por middleware
+
+        # Aquí va tu lógica para procesar la solicitud
+        return JsonResponse({"message": "Dirección creada exitosamente"})
+    return JsonResponse({"error": "Método no permitido"}, status=405)
+
+
+
+def debug_csrf(request):
+    print("CSRF Cookie:", request.COOKIES.get("csrftoken"))
+    print("CSRF Header:", request.headers.get("X-CSRFToken"))
+    token = get_token(request)  # Genera o recupera el token CSRF
+    print("CSRF Token (from get_token):", token)
+    return JsonResponse({"csrftoken": token})
+
+
+def logout_view(request):
+    # Lógica para manejar el cierre de sesión
+    ...
+    response = JsonResponse({"message": "Logged out successfully"})
+    response.delete_cookie("csrftoken")  # Elimina la cookie CSRF
+    return response

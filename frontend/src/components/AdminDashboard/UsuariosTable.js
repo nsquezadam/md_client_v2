@@ -16,7 +16,7 @@ const UsuariosTable = () => {
 
     const handleCreate = async (formData) => {
         try {
-            await createData("/usuario", formData);
+            await createData("usuario", formData);
             setShowModal(false);
             alert("Usuario creado con éxito");
         } catch (error) {
@@ -29,7 +29,7 @@ const UsuariosTable = () => {
         <div>
             <button onClick={() => setShowModal(true)}>Crear Usuario</button>
             <Crudtable
-                endpoint="/usuario"
+                endpoint="usuario"
                 columns={columns}
                 columnLabels={columnLabels}
                 idField="id_usuario"

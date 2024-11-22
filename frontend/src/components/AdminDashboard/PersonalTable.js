@@ -33,7 +33,7 @@ const PersonalTable = () => {
 
     const handleCreate = async (formData) => {
         try {
-            await createData("/personal", formData);
+            await createData("personal", formData);
             setShowModal(false);
             alert("Personal creado con éxito");
         } catch (error) {
@@ -46,7 +46,7 @@ const PersonalTable = () => {
         <div>
             <button onClick={() => setShowModal(true)}>Crear Personal</button>
             <Crudtable
-                endpoint="/personal"
+                endpoint="personal"
                 columns={columns}
                 columnLabels={columnLabels}
                 idField="id_personal"

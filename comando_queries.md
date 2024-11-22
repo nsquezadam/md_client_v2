@@ -165,3 +165,33 @@ curl -X POST http://127.0.0.1:8000/api/auth/direccion/ \
 
 mv frontend/build backend/static_build
 python manage.py collectstatic --noinput
+
+
+curl -X PUT http://127.0.0.1:8000/api/auth/direccion/5/ \
+-H "Content-Type: application/json" \
+-H "X-CSRFToken: F8UFBFyuaUfGEsXs5mRbbqq4STkjWNyf" \
+-d '{"nom_calle": "Nueva Calle", "num_calle": "1234", "comuna": "Nueva Comuna"}' \
+--cookie "csrftoken=F8UFBFyuaUfGEsXs5mRbbqq4STkjWNyf>; sessionid=iakek69hr6r5rvomvwrqsgapn9uezt58"
+
+
+
+
+
+
+CSRF_TOKEN=$(cat cookies.txt | grep csrftoken | awk '{print $7}')
+curl -b cookies.txt -X POST http://127.0.0.1:8000/api/auth/direccion/ \
+-H "Content-Type: application/json" \
+-H "X-CSRFToken: $CSRF_TOKEN" \
+-d '{"nom_calle": "Nueva Calle", "num_calle": "123", "comuna": "Nueva Comuna"}'
+
+CSRF_TOKEN=$(cat cookies.txt | grep csrftoken | awk '{print $7}')
+curl -b cookies.txt -X POST http://127.0.0.1:8000/api/auth/login/ \
+-H "Content-Type: application/json" \
+-H "X-CSRFToken: $CSRF_TOKEN" \
+-d '{"username": "admin", "password": "admin123"}'
+#CORS_ALLOWED_ORIGINS = ["https://md-client-v2.onrender.com","http://localhost:3000","https://mdclient.netlify.app","http://127.0.0.1:3000","http://127.0.0.1:8000" ]
+
+python manage.py runserver_plus --cert-file cert.crt --key-file cert.key
+
+
+curl -X GET http://127.0.0.1:8000/api/auth/direccion/ -H "X-CSRFToken: <tu_token>"

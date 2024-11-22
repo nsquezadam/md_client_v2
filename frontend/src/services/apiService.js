@@ -1,47 +1,65 @@
-const API_BASE_URL = process.env.REACT_APP_BACKEND_URL + "/api/auth";
+const API_BASE_URL = process.env.REACT_APP_BACKEND_URL
+    ? `${process.env.REACT_APP_BACKEND_URL}/api/auth/`
+    : "http://127.0.0.1:8000/api/auth/";
 
-// Función para obtener el token CSRF de las cookies
-const getCSRFToken = () => {
-    return document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("csrftoken="))
-        ?.split("=")[1];
+// Obtener el token CSRF de las cookies
+export const getCSRFToken = () => {
+    const cookie = document.cookie
+        .split('; ')
+        .find((row) => row.startsWith('csrftoken='));
+    return cookie ? cookie.split('=')[1] : null;
 };
 
+
+// Actualizar el token CSRF
+export const refreshCSRFToken = async () => {
+        
+    try {
+        const response = await fetch(`${API_BASE_URL}generate-csrf/`, {
+            method: "GET",
+            credentials: "include",
+        });
+        if (!response.ok) {
+            throw new Error(`Error al refrescar CSRF: ${response.status}`);
+        }
+        console.log("CSRF token actualizado.");
+    } catch (error) {
+        console.error("Error al actualizar el token CSRF:", error);
+        throw error;
+    }
+};
+
+// Manejo de errores
 const handleErrors = async (response) => {
     if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        console.error("Server Error:", errorData);
-        throw new Error(`HTTP Error: ${response.status} - ${errorData.detail || "Sin detalles"}`);
+        console.error("Error del servidor:", errorData);
+        throw new Error(
+            `HTTP Error: ${response.status} - ${errorData.detail || "Sin detalles"}`
+        );
     }
     return response.json();
 };
 
-
-// Función para manejar solicitudes GET
+// GET
 export const fetchData = async (endpoint) => {
     try {
-        console.debug(`Fetching data from: ${API_BASE_URL}${endpoint}/`);
         const response = await fetch(`${API_BASE_URL}${endpoint}/`, {
             method: "GET",
-            headers: { "Content-Type": "application/json" },
+            headers: { 
+                "Content-Type": "application/json",
+
+             },
             credentials: "include",
         });
-        
-        if (!response.ok) {
-            console.error(`Error al obtener datos: ${response.status}`);
-            throw new Error(`Error al obtener datos: ${response.status}`);
-        }
-        
-        return await response.json();
+        return await handleErrors(response);
     } catch (error) {
         console.error("FetchData Error:", error);
-        throw error; // Mantener el error para que se maneje adecuadamente
+        throw error;
     }
-    
 };
 
-
+// POST
 // Función para manejar solicitudes POST
 export const createData = async (endpoint, data) => {
     const csrfToken = getCSRFToken();
@@ -56,8 +74,7 @@ export const createData = async (endpoint, data) => {
     });
     return handleErrors(response);
 };
-
-// Función para manejar solicitudes PUT
+// PUT
 export const updateData = async (endpoint, id, data) => {
     const csrfToken = getCSRFToken();
     console.debug("CSRF Token:", csrfToken);
@@ -76,7 +93,7 @@ export const updateData = async (endpoint, id, data) => {
     return handleErrors(response);
 };
 
-
+// DELETE
 // Función para manejar solicitudes DELETE
 export const deleteData = async (endpoint, id) => {
     const csrfToken = getCSRFToken();
@@ -85,10 +102,7 @@ export const deleteData = async (endpoint, id) => {
 
     const response = await fetch(`${API_BASE_URL}${endpoint}/${id}/`, {
         method: "DELETE",
-        headers: {
-            "X-CSRFToken": csrfToken,
-        },
-        credentials: "include",
+
     });
 
     if (!response.ok) {
@@ -98,6 +112,4 @@ export const deleteData = async (endpoint, id) => {
     }
 
     // Manejo de respuesta para DELETE exitoso
-    return response.status === 204 ? { success: true } : await response.json().catch(() => ({}));
-};
-
+    return response.status === 204 ? { success: true } : await response.json().catch(() => ({}));}

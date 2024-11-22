@@ -8,32 +8,31 @@ const withTimeout = (promise, ms) => {
     return Promise.race([promise, timeout]);
 };
 
-
-// // Servicio de inicio de sesión
-// export const login = async (username, password) => {
-//     const response = await fetch(`${API_URL}login/`, {
-//         method: "POST",
-//         headers: { "Content-Type": "application/json" },
-//         credentials: "include", // Asegura que las cookies se gestionen correctamente
-//         body: JSON.stringify({ username, password }),
-//     });
-
-//     if (!response.ok) {
-//         const errorData = await response.json();
-//         throw new Error(errorData.message || "Error de autenticación");
-//     }
-
-//     return response.json(); // Devuelve toda la respuesta JSON
-// };
+export const getCSRFToken = () => {
+    const cookie = document.cookie
+        .split('; ')
+        .find((row) => row.startsWith('csrftoken='));
+    return cookie ? cookie.split('=')[1] : null;
+};
 
 
+const fetchCSRFToken = async () => {
+    try {
+        const response = await fetch(`${API_URL}generate-csrf/`, {
+            method: "GET",
+            credentials: "include", // Incluye cookies en la solicitud
+        });
 
-// Función para configurar headers
-const getHeaders = () => ({
-    "Content-Type": "application/json",
-});
+        if (!response.ok) {
+            throw new Error("Error al obtener el token CSRF");
+        }
 
-// Servicio de inicio de sesión
+        console.log("CSRF token generado y almacenado.");
+    } catch (error) {
+        console.error("Error en fetchCSRFToken:", error);
+    }
+};
+
 export const login = async (username, password) => {
     try {
         const response = await withTimeout(
@@ -45,7 +44,6 @@ export const login = async (username, password) => {
             }),
             5000 // Timeout de 5 segundos
         );
-
         if (!response.ok) {
             const errorData = await response.json();
             throw new Error(errorData.message || "Error de autenticación");
@@ -57,6 +55,13 @@ export const login = async (username, password) => {
         throw error;
     }
 };
+
+// Función para configurar headers
+const getHeaders = () => ({
+    "Content-Type": "application/json",
+});
+
+
 
 // Servicio para cerrar sesión
 export const logout = async () => {

@@ -14,7 +14,8 @@ from .views import (
     usuario_list,
     personal_list,
     direccion_list,
-    obtener_datos_combinados
+    obtener_datos_combinados,
+    generate_csrf
     
 )
 
@@ -31,14 +32,15 @@ router.register(r'direccion', DireccionViewSet, basename='direccion')
 
 # URL patterns
 urlpatterns = [
+    path("generate-csrf/", generate_csrf, name="generate-csrf"),
     path('/', include(router.urls)),       # Endpoints de las tablas
     path('login/', user_login, name='user_login'),  # Endpoint para login
     path('user-info/', user_info, name='user-info'), 
     path('logout/', user_logout, name='user_logout'), 
     path('user-details/', user_details, name='user_details'),
-     path('usuario/', usuario_list, name='usuario-list'),
+    path('usuario/', usuario_list, name='usuario-list'),
     path('personal/', personal_list, name='personal-list'),
     path('direccion/',direccion_list, name='direccion-list'),
-     path('obtener-datos-combinados/', obtener_datos_combinados, name='obtener_datos_combinados'),
+    path('obtener-datos-combinados/', obtener_datos_combinados, name='obtener_datos_combinados'),
 ]
 logger.debug(f"Rutas cargadas: {urlpatterns}")
