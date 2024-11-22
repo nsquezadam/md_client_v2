@@ -11,6 +11,10 @@ from django.utils.timezone import now
 from django.views.decorators.http import require_http_methods
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from django.core.mail import send_mail
+from django.utils.crypto import get_random_string
+from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
 
 
 
@@ -220,3 +224,29 @@ def obtener_datos_combinados(request):
         return Response({"error": "Error al obtener los datos."}, status=500)
 
 
+
+#Futuro
+def reset_password(request, id_usuario):
+    if request.method == "POST":
+        # Obtener usuario por id_usuario
+        usuario = get_object_or_404(Usuario, id_usuario=id_usuario)
+           
+        correo = usuario.id_personal.correo_electronico  
+
+        if not correo:
+            return JsonResponse({"error": "El usuario no tiene un correo asociado."}, status=400)
+
+        # Generar token único
+        token = get_random_string(length=32)
+
+        reset_url = f"http://frontend.url/reset-password/{token}"
+        send_mail(
+            "Restablecimiento de Contraseña",
+            f"Hola, usa este enlace para restablecer tu contraseña: {reset_url}",
+            "admin@tuapp.com",
+            [correo],
+            fail_silently=False,
+        )
+        return JsonResponse({"message": "Correo enviado."})
+    else:
+        return JsonResponse({"error": "Método no permitido."}, status=405)

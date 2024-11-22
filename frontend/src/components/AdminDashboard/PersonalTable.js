@@ -1,74 +1,145 @@
-import React, { useState } from "react";
-import Crudtable from "./Crudtable";
-import { createData } from "../../services/apiService";
-import ModalForm from "./ModalForm";
+import React, { useState, useEffect } from "react";
+import { fetchData, createData, updateData, deleteData } from "../../services/apiService";
+import "./PersonalTable.css";
+import PersonalModal from "./PersonalModal";
 
 const PersonalTable = () => {
-    const [showModal, setShowModal] = useState(false);
+    const [data, setData] = useState([]);
+    const [isModalOpen, setModalOpen] = useState(false);
+    const [isEditMode, setEditMode] = useState(false);
+    const [selectedPersonal, setSelectedPersonal] = useState(null);
+    const [error, setError] = useState("");
 
-    const columns = [
-        "rut_completo",
-        "primer_nombre",
-        "segundo_nombre",
-        "apellido_paterno",
-        "apellido_materno",
-        "fec_nacimiento",
-        "telefono",
-        "correo_electronico",
-        "fec_contratacion",
-        "id_direccion",
-    ];
-    const columnLabels = {
-        rut_completo: "RUT",
-        primer_nombre: "Primer Nombre",
-        segundo_nombre: "Segundo Nombre",
-        apellido_paterno: "Apellido Paterno",
-        apellido_materno: "Apellido Materno",
-        fec_nacimiento: "Fecha de Nacimiento",
-        telefono: "Teléfono",
-        correo_electronico: "Correo Electrónico",
-        fec_contratacion: "Fecha de Contratación",
-        id_direccion: "ID Dirección",
+    // Abrir modal para crear nuevo personal
+    const openCreateModal = () => {
+        setEditMode(false);
+        setSelectedPersonal({
+            rut_completo: "",
+            primer_nombre: "",
+            segundo_nombre: "",
+            apellido_paterno: "",
+            apellido_materno: "",
+            fec_nacimiento: "",
+            telefono: "",
+            correo_electronico: "",
+            fec_contratacion: "",
+            id_direccion: "",
+        });
+        setModalOpen(true);
     };
 
-    const handleCreate = async (formData) => {
+    // Abrir modal para editar personal existente
+    const openEditModal = (personal) => {
+        setEditMode(true);
+        setSelectedPersonal(personal);
+        setModalOpen(true);
+    };
+
+    // Cargar datos al montar el componente
+    useEffect(() => {
+        const loadData = async () => {
+            try {
+                const result = await fetchData("personal");
+                setData(result);
+            } catch (err) {
+                console.error("Error al cargar los datos de personal:", err);
+                setError("No se pudieron cargar los datos de personal.");
+            }
+        };
+        loadData();
+    }, []);
+
+    // Manejar creación de personal
+    const handleCreate = async (newPersonal) => {
         try {
-            await createData("personal", formData);
-            setShowModal(false);
-            alert("Personal creado con éxito");
-        } catch (error) {
-            console.error("Error al crear personal:", error);
-            alert("Error al crear personal");
+            console.log("Datos enviados al servidor:", newPersonal); 
+            const createdPersonal = await createData("personal", newPersonal);
+            setData([...data, createdPersonal]);
+            setModalOpen(false);
+        } catch (err) {
+            console.error("Error al crear personal:", err);
+            alert("No se pudo crear el personal.");
+        }
+    };
+
+    // Manejar edición de personal
+    const handleSaveEdit = async (updatedPersonal) => {
+        try {
+            await updateData("personal", updatedPersonal.id_personal, updatedPersonal);
+            setData(data.map((item) =>
+                item.id_personal === updatedPersonal.id_personal ? updatedPersonal : item
+            ));
+            setModalOpen(false);
+        } catch (err) {
+            console.error("Error al guardar el personal editado:", err);
+            alert("No se pudo guardar el personal.");
+        }
+    };
+
+    // Manejar eliminación de personal
+    const handleDelete = async (id) => {
+        if (window.confirm("¿Estás seguro de que deseas eliminar este personal?")) {
+            try {
+                await deleteData("personal", id);
+                setData(data.filter((item) => item.id_personal !== id));
+            } catch (err) {
+                console.error("Error al eliminar personal:", err);
+                alert("No se pudo eliminar el personal.");
+            }
         }
     };
 
     return (
-        <div>
-            <button onClick={() => setShowModal(true)}>Crear Personal</button>
-            <Crudtable
-                endpoint="personal"
-                columns={columns}
-                columnLabels={columnLabels}
-                idField="id_personal"
-                title="Personal"
-            />
-            {showModal && (
-                <ModalForm
-                    title="Crear Personal"
-                    fields={[
-                        { name: "rut_completo", label: "RUT", required: true },
-                        { name: "primer_nombre", label: "Primer Nombre", required: true },
-                        { name: "segundo_nombre", label: "Segundo Nombre" },
-                        { name: "apellido_paterno", label: "Apellido Paterno", required: true },
-                        { name: "apellido_materno", label: "Apellido Materno", required: true },
-                        { name: "fec_nacimiento", label: "Fecha de Nacimiento", type: "date", required: true },
-                        { name: "telefono", label: "Teléfono", required: true },
-                        { name: "correo_electronico", label: "Correo Electrónico", type: "email", required: true },
-                        { name: "fec_contratacion", label: "Fecha de Contratación", type: "date", required: true },
-                        { name: "id_direccion", label: "ID Dirección", required: true },
-                    ]}
-                    onSubmit={handleCreate}
-                    onClose={() => setShowModal(false)}
+        <div className="personal-table">
+            <h3>Gestión de Personal</h3>
+            {error && <p className="error">{error}</p>}
+            <button onClick={openCreateModal}>Crear Personal</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>RUT</th>
+                        <th>Primer Nombre</th>
+                        <th>Segundo Nombre</th>
+                        <th>Apellido Paterno</th>
+                        <th>Apellido Materno</th>
+                        <th>Fecha de Nacimiento</th>
+                        <th>Teléfono</th>
+                        <th>Correo Electrónico</th>
+                        <th>Fecha de Contratación</th>
+                        <th>ID Dirección</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {data.map((personal) => (
+                        <tr key={personal.id_personal}>
+                            <td>{personal.id_personal}</td>
+                            <td>{personal.rut_completo}</td>
+                            <td>{personal.primer_nombre}</td>
+                            <td>{personal.segundo_nombre}</td>
+                            <td>{personal.apellido_paterno}</td>
+                            <td>{personal.apellido_materno}</td>
+                            <td>{personal.fec_nacimiento}</td>
+                            <td>{personal.telefono}</td>
+                            <td>{personal.correo_electronico}</td>
+                            <td>{personal.fec_contratacion}</td>
+                            <td>{personal.id_direccion}</td>
+                            <td>
+                                <button onClick={() => openEditModal(personal)}>Editar</button>
+                                <button onClick={() => handleDelete(personal.id_personal)}>Eliminar</button>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+
+            {/* Modal para crear/editar personal */}
+            {isModalOpen && selectedPersonal && (
+                <PersonalModal
+                    personal={selectedPersonal}
+                    onSave={isEditMode ? handleSaveEdit : handleCreate}
+                    onClose={() => setModalOpen(false)}
                 />
             )}
         </div>

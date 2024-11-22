@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./EditModal.css"
 
 const EditModal = ({ direccion, onSave, onClose }) => {
     const initialFormData = {

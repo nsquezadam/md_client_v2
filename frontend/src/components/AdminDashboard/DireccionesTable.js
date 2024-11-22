@@ -49,8 +49,7 @@ const DireccionesTable = () => {
     // Manejar creación de dirección
     const handleCreate = async (newDireccion) => {
         try {
-           
-            
+            console.log(newDireccion)
             const createdDireccion = await createData("direccion", newDireccion);
             console.log(newDireccion)
             setData([...data, createdDireccion]);
