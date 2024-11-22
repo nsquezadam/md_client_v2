@@ -92,39 +92,59 @@ const DireccionesTable = () => {
             <h3>Gestión de Direcciones</h3>
             {error && <p className="error">{error}</p>}
             <button onClick={openCreateModal}>Crear Dirección</button>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Calle</th>
-                        <th>Número</th>
-                        <th>Departamento</th>
-                        <th>Comuna</th>
-                        <th>Ciudad</th>
-                        <th>Región</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {data.map((direccion) => (
-                        <tr key={direccion.id_direccion}>
-                            <td>{direccion.id_direccion}</td>
-                            <td>{direccion.nom_calle}</td>
-                            <td>{direccion.num_calle}</td>
-                            <td>{direccion.departamento}</td>
-                            <td>{direccion.comuna}</td>
-                            <td>{direccion.ciudad}</td>
-                            <td>{direccion.region}</td>
-                            <td>
-                                <button onClick={() => openEditModal(direccion)}>Editar</button>
-                                <button onClick={() => handleDelete(direccion.id_direccion)}>Eliminar</button>
-                            </td>
+    
+            {/* Tabla para pantallas grandes */}
+            <div className="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Calle</th>
+                            <th>Número</th>
+                            <th>Departamento</th>
+                            <th>Comuna</th>
+                            <th>Ciudad</th>
+                            <th>Región</th>
+                            <th>Acciones</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
-
-            {/* Modal para crear/editar dirección */}
+                    </thead>
+                    <tbody>
+                        {data.map((direccion) => (
+                            <tr key={direccion.id_direccion}>
+                                <td>{direccion.id_direccion}</td>
+                                <td>{direccion.nom_calle}</td>
+                                <td>{direccion.num_calle}</td>
+                                <td>{direccion.departamento}</td>
+                                <td>{direccion.comuna}</td>
+                                <td>{direccion.ciudad}</td>
+                                <td>{direccion.region}</td>
+                                <td>
+                                    <button className="btn-table-direc" onClick={() => openEditModal(direccion)}>Editar</button>
+                                    <button className="btn-table-direc" onClick={() => handleDelete(direccion.id_direccion)}>Eliminar</button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+    
+            {/* Tarjetas para pantallas pequeñas */}
+            <div className="card-list">
+                {data.map((direccion) => (
+                    <div key={direccion.id_direccion} className="card">
+                        <div><span>ID:</span> {direccion.id_direccion}</div>
+                        <div><span>Calle:</span> {direccion.nom_calle}</div>
+                        <div><span>Número:</span> {direccion.num_calle}</div>
+                        <div><span>Departamento:</span> {direccion.departamento}</div>
+                        <div><span>Comuna:</span> {direccion.comuna}</div>
+                        <div><span>Ciudad:</span> {direccion.ciudad}</div>
+                        <div><span>Región:</span> {direccion.region}</div>
+                        <button onClick={() => openEditModal(direccion)}>Editar</button>
+                        <button onClick={() => handleDelete(direccion.id_direccion)}>Eliminar</button>
+                    </div>
+                ))}
+            </div>
+    
             {isModalOpen && selectedDireccion && (
                 <EditModal
                     direccion={selectedDireccion}
@@ -134,6 +154,7 @@ const DireccionesTable = () => {
             )}
         </div>
     );
+    
 };
 
 export default DireccionesTable;

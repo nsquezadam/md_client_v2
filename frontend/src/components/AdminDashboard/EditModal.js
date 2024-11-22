@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./EditModal.css"
+import "./EditModal.css";
 
 const EditModal = ({ direccion, onSave, onClose }) => {
     const initialFormData = {
@@ -9,7 +9,7 @@ const EditModal = ({ direccion, onSave, onClose }) => {
         comuna: "",
         ciudad: "",
         region: "",
-        ...direccion, // Esto sobrescribirá los valores predeterminados si existen en `direccion`
+        ...direccion, // Sobrescribe con los valores existentes si los hay
     };
 
     const [formData, setFormData] = useState(initialFormData);
@@ -21,7 +21,7 @@ const EditModal = ({ direccion, onSave, onClose }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSave(formData); // Llama a `handleSaveEdit` o `handleCreate` en el componente principal
+        onSave(formData); // Llama la función para guardar
     };
 
     return (
@@ -29,46 +29,52 @@ const EditModal = ({ direccion, onSave, onClose }) => {
             <div className="modal-content">
                 <h3>{formData.id_direccion ? "Editar Dirección" : "Crear Dirección"}</h3>
                 <form onSubmit={handleSubmit}>
-                    <label>Calle</label>
+                    <label htmlFor="nom_calle">Calle</label>
                     <input
+                        id="nom_calle"
                         type="text"
                         name="nom_calle"
                         value={formData.nom_calle || ""}
                         onChange={handleChange}
                         required
                     />
-                    <label>Número</label>
+                    <label htmlFor="num_calle">Número</label>
                     <input
+                        id="num_calle"
                         type="text"
                         name="num_calle"
                         value={formData.num_calle || ""}
                         onChange={handleChange}
                         required
                     />
-                    <label>Departamento</label>
+                    <label htmlFor="departamento">Departamento</label>
                     <input
+                        id="departamento"
                         type="text"
                         name="departamento"
                         value={formData.departamento || ""}
                         onChange={handleChange}
                     />
-                    <label>Comuna</label>
+                    <label htmlFor="comuna">Comuna</label>
                     <input
+                        id="comuna"
                         type="text"
                         name="comuna"
                         value={formData.comuna || ""}
                         onChange={handleChange}
                         required
                     />
-                    <label>Ciudad</label>
+                    <label htmlFor="ciudad">Ciudad</label>
                     <input
+                        id="ciudad"
                         type="text"
                         name="ciudad"
                         value={formData.ciudad || ""}
                         onChange={handleChange}
                     />
-                    <label>Región</label>
+                    <label htmlFor="region">Región</label>
                     <input
+                        id="region"
                         type="text"
                         name="region"
                         value={formData.region || ""}

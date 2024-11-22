@@ -95,47 +95,70 @@ const PersonalTable = () => {
         <div className="personal-table">
             <h3>Gestión de Personal</h3>
             {error && <p className="error">{error}</p>}
-            <button onClick={openCreateModal}>Crear Personal</button>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>RUT</th>
-                        <th>Primer Nombre</th>
-                        <th>Segundo Nombre</th>
-                        <th>Apellido Paterno</th>
-                        <th>Apellido Materno</th>
-                        <th>Fecha de Nacimiento</th>
-                        <th>Teléfono</th>
-                        <th>Correo Electrónico</th>
-                        <th>Fecha de Contratación</th>
-                        <th>ID Dirección</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {data.map((personal) => (
-                        <tr key={personal.id_personal}>
-                            <td>{personal.id_personal}</td>
-                            <td>{personal.rut_completo}</td>
-                            <td>{personal.primer_nombre}</td>
-                            <td>{personal.segundo_nombre}</td>
-                            <td>{personal.apellido_paterno}</td>
-                            <td>{personal.apellido_materno}</td>
-                            <td>{personal.fec_nacimiento}</td>
-                            <td>{personal.telefono}</td>
-                            <td>{personal.correo_electronico}</td>
-                            <td>{personal.fec_contratacion}</td>
-                            <td>{personal.id_direccion}</td>
-                            <td>
-                                <button onClick={() => openEditModal(personal)}>Editar</button>
-                                <button onClick={() => handleDelete(personal.id_personal)}>Eliminar</button>
-                            </td>
+            <button className="btn_modal_personal" onClick={openCreateModal}>Crear Personal</button>
+            <div className="table-container">
+                {/* Mostrar tabla en pantallas grandes */}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>RUT</th>
+                            <th>Primer Nombre</th>
+                            <th>Segundo Nombre</th>
+                            <th>Apellido Paterno</th>
+                            <th>Apellido Materno</th>
+                            <th>Fecha de Nacimiento</th>
+                            <th>Teléfono</th>
+                            <th>Correo Electrónico</th>
+                            <th>Fecha de Contratación</th>
+                            <th>ID Dirección</th>
+                            <th>Acciones</th>
                         </tr>
+                    </thead>
+                    <tbody>
+                        {data.map((personal) => (
+                            <tr key={personal.id_personal}>
+                                <td>{personal.id_personal}</td>
+                                <td>{personal.rut_completo}</td>
+                                <td>{personal.primer_nombre}</td>
+                                <td>{personal.segundo_nombre}</td>
+                                <td>{personal.apellido_paterno}</td>
+                                <td>{personal.apellido_materno}</td>
+                                <td>{personal.fec_nacimiento}</td>
+                                <td>{personal.telefono}</td>
+                                <td>{personal.correo_electronico}</td>
+                                <td>{personal.fec_contratacion}</td>
+                                <td>{personal.id_direccion}</td>
+                                <td>
+                                    <button className="btn_table_personal" onClick={() => openEditModal(personal)}>Editar</button>
+                                    <button className="btn_table_personal" onClick={() => handleDelete(personal.id_personal)}>Eliminar</button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+    
+                {/* Mostrar tarjetas en pantallas pequeñas */}
+                <div className="card-list">
+                    {data.map((personal) => (
+                        <div key={personal.id_personal} className="card">
+                            <div><span>ID:</span> {personal.id_personal}</div>
+                            <div><span>RUT:</span> {personal.rut_completo}</div>
+                            <div><span>Primer Nombre:</span> {personal.primer_nombre}</div>
+                            <div><span>Segundo Nombre:</span> {personal.segundo_nombre}</div>
+                            <div><span>Apellido Paterno:</span> {personal.apellido_paterno}</div>
+                            <div><span>Apellido Materno:</span> {personal.apellido_materno}</div>
+                            <div><span>Fecha de Nacimiento:</span> {personal.fec_nacimiento}</div>
+                            <div><span>Teléfono:</span> {personal.telefono}</div>
+                            <div><span>Correo Electrónico:</span> {personal.correo_electronico}</div>
+                            <div><span>Fecha de Contratación:</span> {personal.fec_contratacion}</div>
+                            <div><span>ID Dirección:</span> {personal.id_direccion}</div>
+                            <button onClick={() => openEditModal(personal)}>Editar</button>
+                            <button onClick={() => handleDelete(personal.id_personal)}>Eliminar</button>
+                        </div>
                     ))}
-                </tbody>
-            </table>
-
+                </div>
+            </div>
             {isModalOpen && (
                 <PersonalModal
                     personal={selectedPersonal}
@@ -145,6 +168,9 @@ const PersonalTable = () => {
             )}
         </div>
     );
+    
+    
+    
 };
 
 export default PersonalTable;

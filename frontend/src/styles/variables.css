@@ -7,4 +7,6 @@
     --color-header: #186FCC; /* Fondo del header */
     --color-footer: #186FCC; /* Fondo del footer */
     --color-error:rgb(79, 7, 7); /* Mensajes de error */
+    --color--thback: #f4f4f4;    /* Color de fondo Encabezado tablas */
+    --color-hover: #0056b3; /*Color hover   botones*/
 }

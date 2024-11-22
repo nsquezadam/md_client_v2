@@ -1,37 +1,52 @@
+@import "../../styles/variables.css";
+
+
 .personal-table {
     font-family: Arial, sans-serif;
     margin: 0 auto;
     padding: 20px;
-    max-width: 1200px;
+    max-width: 1440px;
 }
 
 .personal-table h3 {
     margin-bottom: 20px;
-    color: #127484;
+    color: var(--color-primary);
     text-align: center;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
 }
 
-.personal-table button {
+.btn_table_personal, 
+.btn_modal_personal{
+    width:100px ;
     margin-bottom: 15px;
     padding: 10px 15px;
-    font-size: 1rem;
+    font-size: 0.8rem;
     border: none;
-    background-color: #007bff;
-    color: white;
+    background-color:var(--color-primary);
+    color: var(--color-background);
     cursor: pointer;
     border-radius: 4px;
     transition: background-color 0.3s ease;
 }
 
-.personal-table button:hover {
+.btn_modal_personal button:hover {
+    background-color: #0056b3;
+}
+.btn_table_personal  button:hover {
     background-color: #0056b3;
 }
 
+.table-container {
+    margin-top: 15px;
+    overflow-x: auto; /* Default behavior for larger screens */
+}
+
+.table-container tr {
+    font-size: 1rem;
+}
 .personal-table table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 15px;
 }
 
 .personal-table th,
@@ -39,52 +54,56 @@
     padding: 10px;
     text-align: left;
     border-bottom: 1px solid #ddd;
+    font-size: 1rem;
 }
 
 .personal-table th {
-    background-color: #e9fbe9;
-    color: #127484;
+    background-color:var(--color--thback);
+    color: var(--color-primary);
+    font-size: 1rem;
 }
 
-.personal-table td {
-    font-size: 0.95rem;
+.card-list {
+    display: none;
 }
 
-.personal-table .error {
-    color: red;
-    font-weight: bold;
-    margin: 10px 0;
-    text-align: center;
-}
 
-/* Responsivo */
+/* Responsivo: Formato en Cajas */
 @media (max-width: 768px) {
-    .personal-table table {
-        font-size: 0.9rem;
+    .table-container {
+        overflow-x: unset; /* Desactivar scroll horizontal */
     }
 
-    .personal-table th,
-    .personal-table td {
-        padding: 8px;
+    table {
+        display: none; /* Ocultar la tabla */
     }
 
-    .personal-table button {
-        font-size: 0.9rem;
+    .card-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .card {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 15px;
+        background-color: #f9f9f9;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .card div {
+        margin-bottom: 8px;
+    }
+
+    .card div span {
+        font-weight: bold;
+        color: #127484;
+    }
+
+    .card button {
         width: 100%;
-    }
-}
-
-@media (max-width: 480px) {
-    .personal-table h3 {
-        font-size: 1.5rem;
-    }
-
-    .personal-table table {
-        font-size: 0.85rem;
-    }
-
-    .personal-table th,
-    .personal-table td {
-        padding: 6px;
+        margin-top: 10px;
+        padding: 8px 12px;
     }
 }

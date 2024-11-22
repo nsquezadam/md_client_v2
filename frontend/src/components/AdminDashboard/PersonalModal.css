@@ -1,3 +1,4 @@
+@import '../../styles/variables.css';
 .modal {
     position: fixed;
     top: 0;
@@ -9,6 +10,7 @@
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    overflow-y: auto; /* Permite el desplazamiento vertical si el contenido excede el tamaño de la pantalla */
 }
 
 .modal-content {
@@ -16,13 +18,17 @@
     padding: 20px;
     border-radius: 8px;
     width: 90%;
-    max-width: 500px;
+    max-width: 700px;
+    max-height: 80vh;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    position: relative; /* Asegura que los elementos se posicionen dentro del modal */
+    max-height: 90vh; /* Limita la altura máxima para pantallas pequeñas */
+    overflow-y: auto; /* Permite el desplazamiento interno si el contenido excede el modal */
 }
 
 .modal-content h3 {
     margin-top: 0;
-    font-size: 1.5rem;
+    font-size: 1rem;
     text-align: center;
 }
 
@@ -76,6 +82,8 @@
     .modal-content {
         width: 100%;
         padding: 15px;
+        max-height: 90vh; /* Garantiza que el modal no exceda la altura de la pantalla */
+        overflow-y: auto; /* Permite desplazamiento interno */
     }
 
     .modal-content h3 {

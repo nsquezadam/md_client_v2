@@ -90,41 +90,62 @@ const UsuariosTable = () => {
             }}>
                 Crear Usuario
             </button>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre de Usuario</th>
-                        {/* <th>Contraseña</th> */}
-                        <th>Personal</th>
-                        <th>Estado</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {data.map((usuario) => (
-                        <tr key={usuario.id_usuario}>
-                            <td>{usuario.id_usuario}</td>
-                            <td>{usuario.nom_usuario}</td>
-                            {/* <td>••••••••</td> */}
-                            <td>{usuario.id_personal}</td>
-                            <td>{usuario.estado}</td>
-                            <td>
-                                <button onClick={() => {
-                                    setEditMode(true);
-                                    setSelectedUsuario(usuario);
-                                    setModalOpen(true);
-                                }}>
-                                    Editar
-                                </button>
-                                <button onClick={() => handleDelete(usuario.id_usuario)}>Eliminar</button>
-                                {/* <button onClick={() => handleResetPassword(usuario.id_usuario)}>Restablecer Contraseña</button> */}
-                            </td>
+    
+            {/* Tabla para pantallas grandes */}
+            <div className="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre de Usuario</th>
+                            <th>Personal</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
-
+                    </thead>
+                    <tbody>
+                        {data.map((usuario) => (
+                            <tr key={usuario.id_usuario}>
+                                <td>{usuario.id_usuario}</td>
+                                <td>{usuario.nom_usuario}</td>
+                                <td>{usuario.id_personal}</td>
+                                <td>{usuario.estado}</td>
+                                <td>
+                                    <button className="btn-table_usu" onClick={() => {
+                                        setEditMode(true);
+                                        setSelectedUsuario(usuario);
+                                        setModalOpen(true);
+                                    }}>
+                                        Editar
+                                    </button>
+                                    <button className="btn-table_usu" onClick={() => handleDelete(usuario.id_usuario)}>Eliminar</button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+    
+            {/* Tarjetas para pantallas pequeñas */}
+            <div className="card-list">
+                {data.map((usuario) => (
+                    <div key={usuario.id_usuario} className="card">
+                        <div><span>ID:</span> {usuario.id_usuario}</div>
+                        <div><span>Nombre de Usuario:</span> {usuario.nom_usuario}</div>
+                        <div><span>Personal:</span> {usuario.id_personal}</div>
+                        <div><span>Estado:</span> {usuario.estado}</div>
+                        <button onClick={() => {
+                            setEditMode(true);
+                            setSelectedUsuario(usuario);
+                            setModalOpen(true);
+                        }}>
+                            Editar
+                        </button>
+                        <button onClick={() => handleDelete(usuario.id_usuario)}>Eliminar</button>
+                    </div>
+                ))}
+            </div>
+    
             {isModalOpen && (
                 <UsuarioModal
                     usuario={selectedUsuario}
@@ -135,6 +156,7 @@ const UsuariosTable = () => {
             )}
         </div>
     );
+    
 };
 
 export default UsuariosTable;
