@@ -1,4 +1,7 @@
-const API_BASE_URL = "http://127.0.0.1:8000/api/auth/";
+const API_BASE_URL = process.env.REACT_APP_BACKEND_URL
+    ? `${process.env.REACT_APP_BACKEND_URL}/api/auth/`
+    : "http://127.0.0.1:8000/api/auth/";
+
 
 // Función para obtener el token CSRF de las cookies
 const getCSRFToken = () => {
