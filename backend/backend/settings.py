@@ -47,7 +47,7 @@ LOGGING = {
 
 
 
-ALLOWED_HOSTS = ['127.0.0.1','localhost','https://md-clientapp.onrender.com','https://mdclient.netlify.app/']
+ALLOWED_HOSTS = ['127.0.0.1','localhost','https://md-client-v2.onrender.com','https://mdclient.netlify.app']
 
 
 # ALLOWED_HOSTS = ['*']
@@ -112,10 +112,10 @@ CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # Dirección del frontend
     "http://127.0.0.1:3000",
-    "https://mdclient.netlify.app/"
+    "https://mdclient.netlify.app"
 ]
 CSRF_TRUSTED_ORIGINS = [
-    "https://mdclient.netlify.app/",
+    "https://mdclient.netlify.app",
     "http://localhost:3000",
 ]
 
