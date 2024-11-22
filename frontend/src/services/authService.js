@@ -16,22 +16,22 @@ export const getCSRFToken = () => {
 };
 
 
-const fetchCSRFToken = async () => {
-    try {
-        const response = await fetch(`${API_URL}generate-csrf/`, {
-            method: "GET",
-            credentials: "include", // Incluye cookies en la solicitud
-        });
+// const fetchCSRFToken = async () => {
+//     try {
+//         const response = await fetch(`${API_URL}generate-csrf/`, {
+//             method: "GET",
+//             credentials: "include", // Incluye cookies en la solicitud
+//         });
 
-        if (!response.ok) {
-            throw new Error("Error al obtener el token CSRF");
-        }
+//         if (!response.ok) {
+//             throw new Error("Error al obtener el token CSRF");
+//         }
 
-        console.log("CSRF token generado y almacenado.");
-    } catch (error) {
-        console.error("Error en fetchCSRFToken:", error);
-    }
-};
+//         console.log("CSRF token generado y almacenado.");
+//     } catch (error) {
+//         console.error("Error en fetchCSRFToken:", error);
+//     }
+// };
 
 export const login = async (username, password) => {
     try {
