@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { refreshCSRFToken, fetchData, createData, updateData, deleteData,getCSRFToken } from "../../services/apiService";
+import { fetchData, createData, updateData, deleteData } from "../../services/apiService";
 import "./DireccionesTable.css";
 import EditModal from "./EditModal.js";
 
@@ -35,7 +35,7 @@ const DireccionesTable = () => {
     useEffect(() => {
         const loadData = async () => {
             try {
-                await refreshCSRFToken(); // Actualiza el CSRF token
+                
                 const result = await fetchData("direccion");
                 setData(result);
             } catch (err) {
@@ -49,9 +49,8 @@ const DireccionesTable = () => {
     // Manejar creación de dirección
     const handleCreate = async (newDireccion) => {
         try {
-            await refreshCSRFToken();
-            const csrfToken = getCSRFToken();
-            console.log("CSRF Token utilizado:", csrfToken);
+           
+            
             const createdDireccion = await createData("direccion", newDireccion);
             console.log(newDireccion)
             setData([...data, createdDireccion]);

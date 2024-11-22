@@ -14,8 +14,7 @@ from .views import (
     usuario_list,
     personal_list,
     direccion_list,
-    obtener_datos_combinados,
-    generate_csrf
+    obtener_datos_combinados
     
 )
 
@@ -32,8 +31,8 @@ router.register(r'direccion', DireccionViewSet, basename='direccion')
 
 # URL patterns
 urlpatterns = [
-    path("generate-csrf/", generate_csrf, name="generate-csrf"),
-    path('/', include(router.urls)),       # Endpoints de las tablas
+    
+    path('', include(router.urls)),       # Endpoints de las tablas
     path('login/', user_login, name='user_login'),  # Endpoint para login
     path('user-info/', user_info, name='user-info'), 
     path('logout/', user_logout, name='user_logout'), 
