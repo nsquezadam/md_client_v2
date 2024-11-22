@@ -47,7 +47,12 @@ LOGGING = {
 
 
 
-ALLOWED_HOSTS = ['127.0.0.1','localhost','https://md-client-v2.onrender.com','https://mdclient.netlify.app']
+ALLOWED_HOSTS = [
+    '127.0.0.1', 
+    'localhost', 
+    'md-client-v2.onrender.com', 
+    'mdclient.netlify.app'
+]
 
 
 # ALLOWED_HOSTS = ['*']
