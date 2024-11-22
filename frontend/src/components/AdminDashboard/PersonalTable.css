@@ -1,16 +1,37 @@
 .personal-table {
-    padding: 10px;
+    font-family: Arial, sans-serif;
+    margin: 0 auto;
+    padding: 20px;
+    max-width: 1200px;
 }
 
-.personal-table h2 {
+.personal-table h3 {
     margin-bottom: 20px;
     color: #127484;
+    text-align: center;
+    font-size: 1.8rem;
+}
+
+.personal-table button {
+    margin-bottom: 15px;
+    padding: 10px 15px;
+    font-size: 1rem;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.personal-table button:hover {
+    background-color: #0056b3;
 }
 
 .personal-table table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 20px;
+    margin-top: 15px;
 }
 
 .personal-table th,
@@ -22,4 +43,48 @@
 
 .personal-table th {
     background-color: #e9fbe9;
+    color: #127484;
+}
+
+.personal-table td {
+    font-size: 0.95rem;
+}
+
+.personal-table .error {
+    color: red;
+    font-weight: bold;
+    margin: 10px 0;
+    text-align: center;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .personal-table table {
+        font-size: 0.9rem;
+    }
+
+    .personal-table th,
+    .personal-table td {
+        padding: 8px;
+    }
+
+    .personal-table button {
+        font-size: 0.9rem;
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .personal-table h3 {
+        font-size: 1.5rem;
+    }
+
+    .personal-table table {
+        font-size: 0.85rem;
+    }
+
+    .personal-table th,
+    .personal-table td {
+        padding: 6px;
+    }
 }

@@ -95,7 +95,7 @@ const UsuariosTable = () => {
                     <tr>
                         <th>ID</th>
                         <th>Nombre de Usuario</th>
-                        <th>Contraseña</th>
+                        {/* <th>Contraseña</th> */}
                         <th>Personal</th>
                         <th>Estado</th>
                         <th>Acciones</th>

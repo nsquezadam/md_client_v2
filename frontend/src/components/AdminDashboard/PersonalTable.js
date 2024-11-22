@@ -10,6 +10,21 @@ const PersonalTable = () => {
     const [selectedPersonal, setSelectedPersonal] = useState(null);
     const [error, setError] = useState("");
 
+    // Cargar datos de la tabla Personal
+    const loadData = async () => {
+        try {
+            const result = await fetchData("personal");
+            setData(result);
+        } catch (err) {
+            console.error("Error al cargar los datos de personal:", err);
+            setError("No se pudieron cargar los datos de personal.");
+        }
+    };
+
+    useEffect(() => {
+        loadData();
+    }, []);
+
     // Abrir modal para crear nuevo personal
     const openCreateModal = () => {
         setEditMode(false);
@@ -35,26 +50,11 @@ const PersonalTable = () => {
         setModalOpen(true);
     };
 
-    // Cargar datos al montar el componente
-    useEffect(() => {
-        const loadData = async () => {
-            try {
-                const result = await fetchData("personal");
-                setData(result);
-            } catch (err) {
-                console.error("Error al cargar los datos de personal:", err);
-                setError("No se pudieron cargar los datos de personal.");
-            }
-        };
-        loadData();
-    }, []);
-
     // Manejar creación de personal
     const handleCreate = async (newPersonal) => {
         try {
-            console.log("Datos enviados al servidor:", newPersonal); 
             const createdPersonal = await createData("personal", newPersonal);
-            setData([...data, createdPersonal]);
+            setData((prevData) => [...prevData, createdPersonal]);
             setModalOpen(false);
         } catch (err) {
             console.error("Error al crear personal:", err);
@@ -66,9 +66,11 @@ const PersonalTable = () => {
     const handleSaveEdit = async (updatedPersonal) => {
         try {
             await updateData("personal", updatedPersonal.id_personal, updatedPersonal);
-            setData(data.map((item) =>
-                item.id_personal === updatedPersonal.id_personal ? updatedPersonal : item
-            ));
+            setData((prevData) =>
+                prevData.map((item) =>
+                    item.id_personal === updatedPersonal.id_personal ? updatedPersonal : item
+                )
+            );
             setModalOpen(false);
         } catch (err) {
             console.error("Error al guardar el personal editado:", err);
@@ -81,7 +83,7 @@ const PersonalTable = () => {
         if (window.confirm("¿Estás seguro de que deseas eliminar este personal?")) {
             try {
                 await deleteData("personal", id);
-                setData(data.filter((item) => item.id_personal !== id));
+                setData((prevData) => prevData.filter((item) => item.id_personal !== id));
             } catch (err) {
                 console.error("Error al eliminar personal:", err);
                 alert("No se pudo eliminar el personal.");
@@ -134,8 +136,7 @@ const PersonalTable = () => {
                 </tbody>
             </table>
 
-            {/* Modal para crear/editar personal */}
-            {isModalOpen && selectedPersonal && (
+            {isModalOpen && (
                 <PersonalModal
                     personal={selectedPersonal}
                     onSave={isEditMode ? handleSaveEdit : handleCreate}
