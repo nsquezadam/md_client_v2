@@ -45,9 +45,9 @@
     text-align: right;
     margin-right: 1.6rem;
 }
-.header-right p{
-    color: var(--color-background);
-}
+/* .header-right p{
+    /* color: var(--color-background);
+} */ */
 .current-time {
     font-size: 12px;
     font-weight: bold;
