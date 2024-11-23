@@ -3,11 +3,11 @@ import "./UsuarioModal.css";
 
 const UsuarioModal = ({ usuario, onSave, onClose, personalOptions }) => {
     const initialFormData = {
-        nom_usuario: "",
-        hk_contrasena: usuario?.id_usuario ? "" : "temp1234", // Contraseña temporal para nuevos usuarios
-        id_personal: "",
-        estado: "Activo",
-        ...usuario,
+        id_usuario: usuario?.id_usuario,
+        nom_usuario: usuario?.nom_usuario || "",
+        password: usuario?.password ? "" : "temp1234", // Contraseña temporal para nuevos usuarios
+        id_personal: usuario?.id_personal || "",
+        estado: usuario?.estado || "Activo",
     };
 
     const [formData, setFormData] = useState(initialFormData);
@@ -38,8 +38,8 @@ const UsuarioModal = ({ usuario, onSave, onClose, personalOptions }) => {
                     <label>Contraseña</label>
                     <input
                         type="password"
-                        name="hk_contrasena"
-                        value={formData.hk_contrasena || ""}
+                        name="password"
+                        value={formData.password || ""}
                         onChange={handleChange}
                         placeholder="Deja vacío para usar la contraseña existente"
                     />

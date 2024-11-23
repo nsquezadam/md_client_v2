@@ -95,9 +95,10 @@ const PersonalTable = () => {
         <div className="personal-table">
             <h3>Gestión de Personal</h3>
             {error && <p className="error">{error}</p>}
-            <button className="btn_modal_personal" onClick={openCreateModal}>Crear Personal</button>
+            <button onClick={openCreateModal}>Crear Personal</button>
+
+            {/* Tabla para pantallas grandes */}
             <div className="table-container">
-                {/* Mostrar tabla en pantallas grandes */}
                 <table>
                     <thead>
                         <tr>
@@ -130,35 +131,36 @@ const PersonalTable = () => {
                                 <td>{personal.fec_contratacion}</td>
                                 <td>{personal.id_direccion}</td>
                                 <td>
-                                    <button className="btn_table_personal" onClick={() => openEditModal(personal)}>Editar</button>
-                                    <button className="btn_table_personal" onClick={() => handleDelete(personal.id_personal)}>Eliminar</button>
+                                    <button className="btn-person_table" onClick={() => openEditModal(personal)}>Editar</button>
+                                    <button className="btn-person_table" onClick={() => handleDelete(personal.id_personal)}>Eliminar</button>
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
-    
-                {/* Mostrar tarjetas en pantallas pequeñas */}
-                <div className="card-list">
-                    {data.map((personal) => (
-                        <div key={personal.id_personal} className="card">
-                            <div><span>ID:</span> {personal.id_personal}</div>
-                            <div><span>RUT:</span> {personal.rut_completo}</div>
-                            <div><span>Primer Nombre:</span> {personal.primer_nombre}</div>
-                            <div><span>Segundo Nombre:</span> {personal.segundo_nombre}</div>
-                            <div><span>Apellido Paterno:</span> {personal.apellido_paterno}</div>
-                            <div><span>Apellido Materno:</span> {personal.apellido_materno}</div>
-                            <div><span>Fecha de Nacimiento:</span> {personal.fec_nacimiento}</div>
-                            <div><span>Teléfono:</span> {personal.telefono}</div>
-                            <div><span>Correo Electrónico:</span> {personal.correo_electronico}</div>
-                            <div><span>Fecha de Contratación:</span> {personal.fec_contratacion}</div>
-                            <div><span>ID Dirección:</span> {personal.id_direccion}</div>
-                            <button onClick={() => openEditModal(personal)}>Editar</button>
-                            <button onClick={() => handleDelete(personal.id_personal)}>Eliminar</button>
-                        </div>
-                    ))}
-                </div>
             </div>
+
+            {/* Tarjetas para pantallas pequeñas */}
+            <div className="card-list">
+                {data.map((personal) => (
+                    <div key={personal.id_personal} className="card">
+                        <div><span>ID:</span> {personal.id_personal}</div>
+                        <div><span>RUT:</span> {personal.rut_completo}</div>
+                        <div><span>Primer Nombre:</span> {personal.primer_nombre}</div>
+                        <div><span>Segundo Nombre:</span> {personal.segundo_nombre}</div>
+                        <div><span>Apellido Paterno:</span> {personal.apellido_paterno}</div>
+                        <div><span>Apellido Materno:</span> {personal.apellido_materno}</div>
+                        <div><span>Fecha de Nacimiento:</span> {personal.fec_nacimiento}</div>
+                        <div><span>Teléfono:</span> {personal.telefono}</div>
+                        <div><span>Correo Electrónico:</span> {personal.correo_electronico}</div>
+                        <div><span>Fecha de Contratación:</span> {personal.fec_contratacion}</div>
+                        <div><span>ID Dirección:</span> {personal.id_direccion}</div>
+                        <button onClick={() => openEditModal(personal)}>Editar</button>
+                        <button onClick={() => handleDelete(personal.id_personal)}>Eliminar</button>
+                    </div>
+                ))}
+            </div>
+
             {isModalOpen && (
                 <PersonalModal
                     personal={selectedPersonal}
@@ -168,9 +170,7 @@ const PersonalTable = () => {
             )}
         </div>
     );
-    
-    
-    
 };
 
 export default PersonalTable;
+

@@ -46,7 +46,7 @@ export const createData = async (endpoint, data) => {
 export const updateData = async (endpoint, id, data) => {
     const csrfToken = getCSRFToken();
     console.log("CSRF Token:", csrfToken);
-    console.log(`PUT Request URL: ${API_BASE_URL}${endpoint}${id}/`);
+    console.log(`PUT Request URL: ${API_BASE_URL}${endpoint}/${id}/`);
     console.log("PUT Request Data:", JSON.stringify(data));
     const response = await fetch(`${API_BASE_URL}${endpoint}/${id}/`, {
         method: "PUT",

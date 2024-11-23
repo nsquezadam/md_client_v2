@@ -3,12 +3,12 @@
     font-family: Arial, sans-serif;
     margin: 0 auto;
     padding: 20px;
-    max-width: 1200px;
+    max-width: 1440px;
 }
 
 .usuarios-table h3 {
     margin-bottom: 20px;
-    color: #127484;
+    color: var(--color-primary);
     text-align: center;
     font-size: 1.8rem;
 }
@@ -79,7 +79,7 @@
 
     .card div span {
         font-weight: bold;
-        color: #127484;
+        color:  var(--color-primary);
     }
 
     .card button {

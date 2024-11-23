@@ -48,14 +48,22 @@ const UsuariosTable = () => {
 
     const handleSaveEdit = async (updatedUsuario) => {
         try {
+            if (!updatedUsuario.id_usuario) {
+                throw new Error("ID de usuario no definido.");
+            }
             await updateData("usuario", updatedUsuario.id_usuario, updatedUsuario);
-            loadData(); // Actualizar la tabla después de la edición
+            setData((prevData) =>
+                prevData.map((item) =>
+                    item.id_usuario === updatedUsuario.id_usuario ? updatedUsuario : item
+                )
+            );
             setModalOpen(false);
         } catch (err) {
             console.error("Error al guardar el usuario editado:", err);
-            alert("No se pudo guardar el usuario.");
+            alert("No se pudo guardar el usuario editado.");
         }
     };
+    
 
     const handleDelete = async (id) => {
         if (window.confirm("¿Estás seguro de que deseas eliminar este usuario?")) {

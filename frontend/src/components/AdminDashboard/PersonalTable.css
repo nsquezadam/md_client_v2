@@ -1,6 +1,4 @@
-@import "../../styles/variables.css";
-
-
+@import '../../styles/variables.css';
 .personal-table {
     font-family: Arial, sans-serif;
     margin: 0 auto;
@@ -12,38 +10,31 @@
     margin-bottom: 20px;
     color: var(--color-primary);
     text-align: center;
-    font-size: 1.6rem;
+    font-size: 1.8rem;
 }
 
-.btn_table_personal, 
-.btn_modal_personal{
-    width:100px ;
+.btn-person_table {
+    width: 100px;
     margin-bottom: 15px;
     padding: 10px 15px;
-    font-size: 0.8rem;
+    font-size: 1rem;
     border: none;
-    background-color:var(--color-primary);
-    color: var(--color-background);
+    background-color: var(--color-primary);
+    color: white;
     cursor: pointer;
     border-radius: 4px;
     transition: background-color 0.3s ease;
 }
 
-.btn_modal_personal button:hover {
-    background-color: #0056b3;
-}
-.btn_table_personal  button:hover {
-    background-color: #0056b3;
+.personal-table button:hover {
+    background-color: var(--color-primary);
 }
 
 .table-container {
-    margin-top: 15px;
-    overflow-x: auto; /* Default behavior for larger screens */
+    width: 100%;
+    overflow-x: auto; /* Agregar desplazamiento horizontal si es necesario */
 }
 
-.table-container tr {
-    font-size: 1rem;
-}
 .personal-table table {
     width: 100%;
     border-collapse: collapse;
@@ -54,28 +45,17 @@
     padding: 10px;
     text-align: left;
     border-bottom: 1px solid #ddd;
-    font-size: 1rem;
 }
 
 .personal-table th {
-    background-color:var(--color--thback);
+    background-color: var(--color--thbac);
     color: var(--color-primary);
-    font-size: 1rem;
 }
 
-.card-list {
-    display: none;
-}
-
-
-/* Responsivo: Formato en Cajas */
+/* Tarjetas para pantallas pequeñas */
 @media (max-width: 768px) {
     .table-container {
-        overflow-x: unset; /* Desactivar scroll horizontal */
-    }
-
-    table {
-        display: none; /* Ocultar la tabla */
+        display: none; /* Oculta la tabla en pantallas pequeñas */
     }
 
     .card-list {
@@ -98,12 +78,19 @@
 
     .card div span {
         font-weight: bold;
-        color: #127484;
+        color: var(--color-primary);
     }
 
     .card button {
         width: 100%;
         margin-top: 10px;
         padding: 8px 12px;
+    }
+}
+
+/* Ocultar tarjetas en pantallas grandes */
+@media (min-width: 769px) {
+    .card-list {
+        display: none; /* Oculta las tarjetas */
     }
 }
