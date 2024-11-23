@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Header.css";
-import logo from "../../assets/blanco_logo.png";
+import logo from "../../assets/logo.png";
 import { logout } from "../../services/authService";
 
 const Header = () => {
