@@ -29,8 +29,6 @@ const Login = () => {
             // Redirección basada en el rol del usuario
             if (data.user.is_admin) {
                 navigate("/admin-dashboard");
-            } else if (data.user.is_staff) {
-                navigate("/staff-dashboard");
             } else {
                 navigate("/user-dashboard");
             }
